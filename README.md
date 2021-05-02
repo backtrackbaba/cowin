@@ -322,6 +322,21 @@ fixed interval
 
 # Roadmap:
 
+- [ ] Add a filter to search by age group of 18-45 and 45+
+- [ ] Allow user to search for multiple pin codes
+- [ ] Allow user to search for multiple districts
+
+---
+
+# Contributions
+
+Contributions are always welcome!
+
+The roadmap given above is just a line of thought. Please feel free to contribute any other method which you feel could
+be helpful.
+
+---
+
 # License:
 
 MIT License
