@@ -9,7 +9,7 @@ class CoWinAPI(BaseApi):
         url = Constants.states_list_url
         return self._call_api(url)
 
-    def get_districts(self, state_id):
+    def get_districts(self, state_id: str):
         url = f"{Constants.districts_list_url}/{state_id}"
         return self._call_api(url)
 
