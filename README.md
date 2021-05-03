@@ -89,7 +89,7 @@ print(districts)
 ```
 
 <details>
-  <summary>Sampleasd Response:</summary>
+  <summary>Sample Response:</summary>
 
 ```json
 {
@@ -123,8 +123,11 @@ looks-up for slots with today's date. For any other dates pass the date in DD-MM
 from cowin_api import CoWinAPI
 
 district_id = '395'
+date = '03-05-2021'  # Optional. Takes today's date by default
+min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
+
 cowin = CoWinAPI()
-available_centers = cowin.get_availability_by_district(district_id)
+available_centers = cowin.get_availability_by_district(district_id, date, min_age_limit)
 print(available_centers)
 ```
 
@@ -193,9 +196,11 @@ date. For any other dates pass the date in DD-MM-YYYY format.
 from cowin_api import CoWinAPI
 
 pin_code = "400080"
+date = '03-05-2021'  # Optional. Default value is today's date
+min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit 
 
 cowin = CoWinAPI()
-available_centers = cowin.get_availability_by_pincode(pin_code)
+available_centers = cowin.get_availability_by_pincode(pin_code, date, min_age_limit)
 print(available_centers)
 ```
 
@@ -322,9 +327,10 @@ fixed interval
 
 # Roadmap:
 
-- [ ] Add a filter to search by age group of 18-45 and 45+
+- [x] Add a filter to search by age group of 18-45 and 45+
 - [ ] Allow user to search for multiple pin codes
 - [ ] Allow user to search for multiple districts
+- [ ] Catch and raise custom exceptions
 
 ---
 

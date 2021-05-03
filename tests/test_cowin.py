@@ -13,7 +13,7 @@ def test_get_states():
 
 def test_get_districts():
     cowin = CoWinAPI()
-    districts = cowin.get_districts(21)
+    districts = cowin.get_districts("21")
 
     assert isinstance(districts, dict)
     assert districts.get('districts')[0].get('district_id') == 391
@@ -34,3 +34,12 @@ def test_get_availability_by_pincode():
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
+
+
+def test_min_age_limit_filter():
+    cowin = CoWinAPI()
+    availability = cowin.get_availability_by_district("395", min_age_limt=18)
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert len(availability.get('centers')[0].get('sessions')) == 0
