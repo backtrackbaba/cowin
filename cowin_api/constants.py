@@ -4,7 +4,7 @@ class Constants:
     states_list_url = f"{base_url}/admin/location/states"
     districts_list_url = f"{base_url}/admin/location/districts"
 
-    availability_by_pin_code_url = f"{base_url}/appointment/sessions/calendarByPin"
+    availability_by_pin_code_url = f"{base_url}/appointment/sessions/public/calendarByPin"
     availability_by_district_url = f"{base_url}/appointment/sessions/public/calendarByDistrict"
 
-    DD_MM_YYYY = "%d-%m-%y"
+    DD_MM_YYYY = "%d-%m-%Y"
