@@ -1,5 +1,3 @@
-import pytest
-
 from cowin_api import CoWinAPI
 
 
@@ -27,7 +25,6 @@ def test_get_availability_by_district():
     assert isinstance(availability.get('centers'), list)
 
 
-@pytest.mark.skip(reason="Throwing 401 from source")
 def test_get_availability_by_pincode():
     cowin = CoWinAPI()
     availability = cowin.get_availability_by_pincode("400080")
@@ -42,4 +39,3 @@ def test_min_age_limit_filter():
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
-    assert len(availability.get('centers')[0].get('sessions')) == 2
