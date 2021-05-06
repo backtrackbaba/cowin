@@ -49,7 +49,7 @@ print(states)
 ```
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Sample Response:</summary>
 
 ```json
 {
@@ -113,8 +113,8 @@ print(districts)
 
 ## Get all the centers available in a district
 
-Use this method to lookup for centers based on a `district_id` or a list of `district_ids`. This method is broader than searching by pin code as it
-covers the whole district.
+Use this method to lookup for centers based on a `district_id` or a list of `district_ids`. This method is broader than
+searching by pin code as it covers the whole district.
 
 In this method, you would need to pass the `district_id` retrieved from the previous methods. By default, the method
 looks-up for slots with today's date. For any other dates pass the date in DD-MM-YYYY format.
@@ -189,8 +189,8 @@ print(available_centers)
 
 ## Get all the available centers in a pin code
 
-Use this method to lookup for centers based on a `pin_code` or a list of `pin_codes`. By default, the method looks-up for slots with today's
-date. For any other dates pass the date in DD-MM-YYYY format.
+Use this method to lookup for centers based on a `pin_code` or a list of `pin_codes`. By default, the method looks-up
+for slots with today's date. For any other dates pass the date in DD-MM-YYYY format.
 
 ```python
 from cowin_api import CoWinAPI
@@ -331,6 +331,8 @@ fixed interval
 - [x] Allow user to search for multiple pin codes
 - [x] Allow user to search for multiple districts
 - [ ] Catch and raise custom exceptions
+- [ ] Implement Rate Limiting
+- [ ] Implement mocking in test cases
 
 ---
 
