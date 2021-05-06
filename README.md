@@ -113,7 +113,7 @@ print(districts)
 
 ## Get all the centers available in a district
 
-Use this method to lookup for centers based on a `district_id`. This method is broader than searching by pin code as it
+Use this method to lookup for centers based on a `district_id` or a list of `district_ids`. This method is broader than searching by pin code as it
 covers the whole district.
 
 In this method, you would need to pass the `district_id` retrieved from the previous methods. By default, the method
@@ -189,7 +189,7 @@ print(available_centers)
 
 ## Get all the available centers in a pin code
 
-Use this method to lookup for centers based on a `pin_code`. By default, the method looks-up for slots with today's
+Use this method to lookup for centers based on a `pin_code` or a list of `pin_codes`. By default, the method looks-up for slots with today's
 date. For any other dates pass the date in DD-MM-YYYY format.
 
 ```python
@@ -197,7 +197,7 @@ from cowin_api import CoWinAPI
 
 pin_code = "400080"
 date = '03-05-2021'  # Optional. Default value is today's date
-min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit 
+min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
 
 cowin = CoWinAPI()
 available_centers = cowin.get_availability_by_pincode(pin_code, date, min_age_limit)
@@ -309,7 +309,7 @@ print(available_centers)
     }
   ]
 }
-```   
+```
 
 </details>
 
@@ -328,8 +328,8 @@ fixed interval
 # Roadmap:
 
 - [x] Add a filter to search by age group of 18-45 and 45+
-- [ ] Allow user to search for multiple pin codes
-- [ ] Allow user to search for multiple districts
+- [x] Allow user to search for multiple pin codes
+- [x] Allow user to search for multiple districts
 - [ ] Catch and raise custom exceptions
 
 ---
