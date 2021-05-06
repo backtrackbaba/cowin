@@ -182,6 +182,12 @@ print(available_centers)
 }
 ```
 
+
+There is also an experimental ```available_capacity_gte ``` parameter that can filter out the response based on the available slots.
+It is the minimum number of slots for a center to be considered.
+Set this parameter to 1 to find centers with at least one slot available.
+Works only in conjuction with  ```min_age_limit ```
+
 </details>
 
 
@@ -310,6 +316,11 @@ print(available_centers)
   ]
 }
 ```   
+
+There is also an experimental ```available_capacity_gte ``` parameter that can filter out the response based on the available slots.
+It is the minimum number of slots for a center to be considered.
+Set this parameter to 1 to find centers with at least one slot available.
+Works only in conjuction with  ```min_age_limit ```
 
 </details>
 
