@@ -33,6 +33,6 @@ class Constants:
     col_to_comparison = {
         'min_age_limit': lambda x, y: True if x == y else False,
         'available_capacity': lambda x, y: True if x >= y else False,
-        'vaccine': lambda x, y: True if x == y else False,
-        'fee_type': lambda x, y: True if x == y else False,
+        'vaccine': lambda x, y: True if x.upper() == y.upper() else False,
+        'fee_type': lambda x, y: True if x.upper() == y.upper() else False,
     }

@@ -39,20 +39,12 @@ def filter_centers(centers: dict, filters: dict):
         keep_this_center = True
         for f_key in filters:
             if Constants.col_to_loop_level[f_key] == 1:
-                if isinstance(filters[f_key], str):
-                    # make the check case insensitive
-                    if not Constants.col_to_comparison[f_key](center.get(f_key).upper(),
-                                                              filters[f_key].upper()):
-                        # go to the next center
-                        keep_this_center = False
-                        break
-                else:
-                    # normal comparison
-                    if not Constants.col_to_comparison[f_key](center.get(f_key),
-                                                              filters[f_key]):
-                        # go to the next center
-                        keep_this_center = False
-                        break
+                # make the check case insensitive: now done inside constants
+                if not Constants.col_to_comparison[f_key](center.get(f_key),
+                                                          filters[f_key]):
+                    # go to the next center
+                    keep_this_center = False
+                    break
 
         # go to the next center
         if not keep_this_center:
@@ -65,18 +57,11 @@ def filter_centers(centers: dict, filters: dict):
             # iterate over the columns and check for filters
             for f_key in filters:
                 if Constants.col_to_loop_level[f_key] == 2:
-                    if isinstance(filters[f_key], str):
-                        # make the check case insensitive
-                        if not Constants.col_to_comparison[f_key](session.get(f_key).upper(),
-                                                                  filters[f_key].upper()):
-                            keep_this_session = False
-                            break
-                    else:
-                        # normal comparison
-                        if not Constants.col_to_comparison[f_key](session.get(f_key),
-                                                                  filters[f_key]):
-                            keep_this_session = False
-                            break
+                    # make the check case insensitive: now done inside constants
+                    if not Constants.col_to_comparison[f_key](session.get(f_key),
+                                                              filters[f_key]):
+                        keep_this_session = False
+                        break
 
             # go to the next session
             if not keep_this_session:
