@@ -46,11 +46,13 @@ class CoWinAPI(BaseApi):
         # apply the filters
         # the change from min_capacity to available_capacity is requried
         # to keep consistency with columns names of results from api
-        results = filter_centers(results,
-                                 ['min_age_limit', 'available_capacity',
-                                  'vaccine', 'fee_type'],
-                                 [min_age_limit, min_capacity,
-                                  vaccine, fee_type])
+        filter_dict = {
+            'min_age_limit': min_age_limit,
+            'available_capacity': min_capacity,
+            'vaccine': vaccine,
+            'fee_type': fee_type
+        }
+        results = filter_centers(results, filter_dict)
 
         # return the results in the same format as returned by the api
         return results

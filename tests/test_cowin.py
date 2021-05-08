@@ -42,7 +42,7 @@ def test_get_availability_by_pincode():
 
 
 def test_min_age_limit_filter():
-    availability = filter_centers(get_data(), ['min_age_limit'], [18])
+    availability = filter_centers(get_data(), {'min_age_limit': 18})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -50,7 +50,7 @@ def test_min_age_limit_filter():
 
 
 def test_vaccine_filter():
-    availability = filter_centers(get_data(), ['vaccine'], ['COVAXIN'])
+    availability = filter_centers(get_data(), {'vaccine': 'COVAXIN'})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -59,7 +59,7 @@ def test_vaccine_filter():
 
 
 def test_availability_filter():
-    availability = filter_centers(get_data(), ['available_capacity'], [1])
+    availability = filter_centers(get_data(), {'available_capacity': 1})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -68,7 +68,7 @@ def test_availability_filter():
 
 
 def test_fee_type_filter():
-    availability = filter_centers(get_data(), ['fee_type'], ['Paid'])
+    availability = filter_centers(get_data(), {'fee_type': 'Paid'})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -76,7 +76,7 @@ def test_fee_type_filter():
 
 
 def test_fee_type_filter_2():
-    availability = filter_centers(get_data(), ['fee_type'], ['Free'])
+    availability = filter_centers(get_data(), {'fee_type': 'Free'})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -84,8 +84,9 @@ def test_fee_type_filter_2():
 
 
 def test_multiple_filter():
-    availability = filter_centers(get_data(), ['vaccine', 'available_capacity'],
-                                        ['COVAXIN', 1])
+    availability = filter_centers(get_data(),
+                                 {'vaccine': 'COVAXIN',
+                                  'available_capacity': 1})
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)

@@ -9,32 +9,23 @@ def today() -> str:
     return datetime.now().strftime(Constants.DD_MM_YYYY)
 
 
-def filter_centers(centers: dict, filter_col: List[str],
-                   filter_val: List[Union[str, int]]):
+def filter_centers(centers: dict, filters: dict):
     """A common function to apply filter at the second level of looping
     in the results returned by the api, we will do an assertion test of the
     data type for compatibility between filter col and filter val"""
 
     # any filter cols with None values should be ignored
-    # first get the indices with non none values
-    non_none_indices = set([index for index, val in enumerate(filter_val)\
-                        if val is not None])
-    # filter out the cols
-    filter_col = [val for index, val in enumerate(filter_col)\
-                   if index in non_none_indices]
-    # filter out the values
-    filter_val = [val for index, val in enumerate(filter_val)\
-                   if index in non_none_indices]
+    filters = {k:v for k, v in filters.items() if v is not None}
 
     # if no filters, return as is
-    if len(filter_col) == 0:
+    if not filters:
         return centers
 
     # first checks if the filter val are compatible with filter cols
-    for index, col in enumerate(filter_col):
-        assert isinstance(filter_val[index], Constants.col_to_data_type[col]),\
-        f"[DATA TYPE INCOMPATIBLE] for filter {col}, expected instance of \
-        {Constants.col_to_data_type[col]}, got {type(filter_val[index])}"
+    for f_key in filters:
+        assert isinstance(filters[f_key], Constants.col_to_data_type[f_key]),\
+        f"[DATA TYPE INCOMPATIBLE] for filter {f_key}, expected instance of \
+        {Constants.col_to_data_type[f_key]}, got {type(filters[f_key])}"
 
     original_centers = centers.get('centers')
     # this stores the results to be returned
@@ -46,19 +37,19 @@ def filter_centers(centers: dict, filter_col: List[str],
         # iterate over the columns for any level 1 filter, if the filter
         # is passed, only then continue with the below
         keep_this_center = True
-        for index, col in enumerate(filter_col):
-            if Constants.col_to_loop_level[col] == 1:
-                if isinstance(filter_val[index], str):
+        for f_key in filters:
+            if Constants.col_to_loop_level[f_key] == 1:
+                if isinstance(filters[f_key], str):
                     # make the check case insensitive
-                    if not Constants.col_to_comparison[col](center.get(col).upper(),
-                                                            filter_val[index].upper()):
+                    if not Constants.col_to_comparison[f_key](center.get(f_key).upper(),
+                                                              filters[f_key].upper()):
                         # go to the next center
                         keep_this_center = False
                         break
                 else:
                     # normal comparison
-                    if not Constants.col_to_comparison[col](center.get(col),
-                                                            filter_val[index]):
+                    if not Constants.col_to_comparison[f_key](center.get(f_key),
+                                                              filters[f_key]):
                         # go to the next center
                         keep_this_center = False
                         break
@@ -72,18 +63,18 @@ def filter_centers(centers: dict, filter_col: List[str],
             keep_this_session = True
 
             # iterate over the columns and check for filters
-            for index, col in enumerate(filter_col):
-                if Constants.col_to_loop_level[col] == 2:
-                    if isinstance(filter_val[index], str):
+            for f_key in filters:
+                if Constants.col_to_loop_level[f_key] == 2:
+                    if isinstance(filters[f_key], str):
                         # make the check case insensitive
-                        if not Constants.col_to_comparison[col](session.get(col).upper(),
-                                                                filter_val[index].upper()):
+                        if not Constants.col_to_comparison[f_key](session.get(f_key).upper(),
+                                                                  filters[f_key].upper()):
                             keep_this_session = False
                             break
                     else:
                         # normal comparison
-                        if not Constants.col_to_comparison[col](session.get(col),
-                                                                filter_val[index]):
+                        if not Constants.col_to_comparison[f_key](session.get(f_key),
+                                                                  filters[f_key]):
                             keep_this_session = False
                             break
 
