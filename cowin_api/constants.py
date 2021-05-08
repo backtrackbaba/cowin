@@ -8,3 +8,10 @@ class Constants:
     availability_by_district_url = f"{base_url}/appointment/sessions/public/calendarByDistrict"
 
     DD_MM_YYYY = "%d-%m-%Y"
+
+    default_filters = {
+        'min_age_limit': 18,
+        'fee_type': ['Free', 'Paid'],
+        'vaccine': ['COVISHIELD', 'COVAXIN'],
+        'available_capacity': 0,
+    }

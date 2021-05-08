@@ -35,7 +35,7 @@ def test_get_availability_by_pincode():
 
 def test_min_age_limit_filter():
     cowin = CoWinAPI()
-    availability = cowin.get_availability_by_district("395", date="03-05-2021", min_age_limt=18)
+    availability = cowin.get_availability_by_district("395", date="03-05-2021")
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
