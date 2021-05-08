@@ -66,6 +66,23 @@ def test_availability_filter():
     assert sum([len(center.get('sessions')) \
                 for center in availability.get('centers')]) == 37
 
+
+def test_fee_type_filter():
+    availability = filter_centers(get_data(), ['fee_type'], ['Paid'])
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert len(availability.get('centers')) == 0
+
+
+def test_fee_type_filter_2():
+    availability = filter_centers(get_data(), ['fee_type'], ['Free'])
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert len(availability.get('centers')) == 47
+
+
 def test_multiple_filter():
     availability = filter_centers(get_data(), ['vaccine', 'available_capacity'],
                                         ['COVAXIN', 1])

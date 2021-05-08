@@ -124,10 +124,17 @@ from cowin_api import CoWinAPI
 
 district_id = '395'
 date = '03-05-2021'  # Optional. Takes today's date by default
-min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
+min_age_limit = 18  # Optional int. By default returns centers without filtering by min_age_limit
+min_capacity = None  # Optional int. By default returns centers without filtering by min_capacity
+vaccine = None  # Optional str. By default returns centers without filtering by vaccine
+fee_type = None  # Optional str. By default returns centers without filtering by fee_type
 
 cowin = CoWinAPI()
 available_centers = cowin.get_availability_by_district(district_id, date, min_age_limit)
+# available_centers = cowin.get_availability_by_district(district_id, min_age_limit=18,
+                                                         # min_capacity=1,
+                                                         # vaccine='COVAXIN',
+                                                         # fee_type='Free')
 print(available_centers)
 ```
 
@@ -197,10 +204,16 @@ from cowin_api import CoWinAPI
 
 pin_code = "400080"
 date = '03-05-2021'  # Optional. Default value is today's date
-min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
-
+min_age_limit = 18  # Optional int. By default returns centers without filtering by min_age_limit
+min_capacity = None  # Optional int. By default returns centers without filtering by min_capacity
+vaccine = None  # Optional str. By default returns centers without filtering by vaccine
+fee_type = None  # Optional str. By default returns centers without filtering by fee_type
 cowin = CoWinAPI()
 available_centers = cowin.get_availability_by_pincode(pin_code, date, min_age_limit)
+# available_centers = cowin.get_availability_by_pincode(district_id, min_age_limit=18,
+                                                        # min_capacity=1,
+                                                        # vaccine='COVAXIN',
+                                                        # fee_type='Free')
 print(available_centers)
 ```
 
@@ -332,7 +345,7 @@ fixed interval
 - [x] Allow user to search for multiple districts
 - [ ] Catch and raise custom exceptions
 - [ ] Implement Rate Limiting
-- [ ] Implement mocking in test cases
+- [x] Implement mocking in test cases
 
 ---
 
