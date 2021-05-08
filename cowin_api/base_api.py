@@ -6,6 +6,8 @@ from requests.exceptions import HTTPError
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+from cowin_api.constants import Constants
+
 
 class BaseApi:
 
@@ -14,8 +16,8 @@ class BaseApi:
 
         # parameters for retry
         retry_strategy = Retry(
-            total=3,
-            backoff_factor=1, # default is 0 and must be non zero
+            total=Constants.total_retries,
+            backoff_factor=Constants.backoff_factor, # default is 0 and must be non zero
             status_forcelist=[429, 500, 502, 503, 504],
             allowed_methods=["GET"]
         )
