@@ -1,5 +1,13 @@
-from cowin_api import CoWinAPI
+import json
+import os
 
+from cowin_api import CoWinAPI
+from cowin_api.utils import filter_centers
+
+def get_data():
+    with open(os.path.join('tests', 'sample_response_for_testing.json'), 'r') as f:
+        data = json.load(f)
+    return data
 
 def test_get_states():
     cowin = CoWinAPI()
@@ -34,8 +42,35 @@ def test_get_availability_by_pincode():
 
 
 def test_min_age_limit_filter():
-    cowin = CoWinAPI()
-    availability = cowin.get_availability_by_district("395", date="03-05-2021", min_age_limt=18)
+    availability = filter_centers(get_data(), ['min_age_limit'], [18])
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
+    assert len(availability.get('centers')) == 1
+
+
+def test_vaccine_filter():
+    availability = filter_centers(get_data(), ['vaccine'], ['COVAXIN'])
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert sum([len(center.get('sessions')) \
+                for center in availability.get('centers')]) == 10
+
+
+def test_availability_filter():
+    availability = filter_centers(get_data(), ['available_capacity'], [1])
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert sum([len(center.get('sessions')) \
+                for center in availability.get('centers')]) == 37
+
+def test_multiple_filter():
+    availability = filter_centers(get_data(), ['vaccine', 'available_capacity'],
+                                        ['COVAXIN', 1])
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert sum([len(center.get('sessions')) \
+                for center in availability.get('centers')]) == 7
