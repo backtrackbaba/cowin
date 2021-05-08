@@ -8,3 +8,6 @@ class Constants:
     availability_by_district_url = f"{base_url}/appointment/sessions/public/calendarByDistrict"
 
     DD_MM_YYYY = "%d-%m-%Y"
+
+    total_retries = 3
+    backoff_factor = 1
