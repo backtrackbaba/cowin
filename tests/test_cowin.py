@@ -92,3 +92,14 @@ def test_multiple_filter():
     assert isinstance(availability.get('centers'), list)
     assert sum([len(center.get('sessions')) \
                 for center in availability.get('centers')]) == 7
+
+
+def test_multiple_filter_2():
+    availability = filter_centers(get_data(),
+                                 {'vaccine': ['COVAXIN', 'COVISHIELD'],
+                                  'available_capacity': 5})
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+    assert sum([len(center.get('sessions')) \
+                for center in availability.get('centers')]) == 32

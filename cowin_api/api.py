@@ -17,10 +17,11 @@ class CoWinAPI(BaseApi):
 
     def get_availability_by_base(self, caller: str,
                                  areas: Union[str, List[str]],
-                                 date: str, min_age_limit: int,
+                                 date: str,
+                                 min_age_limit: Union[int, List[int]],
                                  min_capacity: int,
-                                 vaccine: str,
-                                 fee_type: str):
+                                 vaccine: Union[str, List[str]],
+                                 fee_type: Union[str, List[str]]):
         """this function is called by the get availability function
         this is separated out so that the parent functions have the same
         structure and development becomes easier"""
@@ -59,10 +60,10 @@ class CoWinAPI(BaseApi):
 
     def get_availability_by_district(self, district_id: Union[str, List[str]],
                                      date: str = today(),
-                                     min_age_limit: int = None,
+                                     min_age_limit: Union[int, List[int]] = None,
                                      min_capacity: int = None,
-                                     vaccine: str = None,
-                                     fee_type: str = None):
+                                     vaccine: Union[str, List[str]] = None,
+                                     fee_type: Union[str, List[str]] = None):
         return self.get_availability_by_base(caller='district', areas=district_id,
                                              date=date, min_age_limit=min_age_limit,
                                              min_capacity=min_capacity,
@@ -71,10 +72,10 @@ class CoWinAPI(BaseApi):
 
     def get_availability_by_pincode(self, pin_code: Union[str, List[str]],
                                     date: str = today(),
-                                    min_age_limit: int = None,
-                                     min_capacity: int = None,
-                                     vaccine: str = None,
-                                     fee_type: str = None):
+                                    min_age_limit: Union[int, List[int]] = None,
+                                    min_capacity: int = None,
+                                    vaccine: Union[str, List[str]] = None,
+                                    fee_type: Union[str, List[str]] = None):
         return self.get_availability_by_base(caller='pincode', areas=pin_code,
                                              date=date, min_age_limit=min_age_limit,
                                              min_capacity=min_capacity,

@@ -14,6 +14,18 @@ def filter_centers(centers: dict, filters: dict):
     in the results returned by the api, we will do an assertion test of the
     data type for compatibility between filter col and filter val"""
 
+    # had to move these definitions here since the col_to_comparison
+    # needs to be generated dependant on what arguments are passed in the filters
+    """a dictionary to store which columns appear at which level in the
+    returned results to help with the looping"""
+    col_to_loop_level = {
+        'min_age_limit': 2,
+        'available_capacity': 2,
+        'vaccine': 2,
+        'fee_type': 1,
+    }
+
+
     # any filter cols with None values should be ignored
     filters = {k:v for k, v in filters.items() if v is not None}
 
@@ -21,58 +33,63 @@ def filter_centers(centers: dict, filters: dict):
     if not filters:
         return centers
 
-    # first checks if the filter val are compatible with filter cols
-    for f_key in filters:
-        assert isinstance(filters[f_key], Constants.col_to_data_type[f_key]),\
-        f"[DATA TYPE INCOMPATIBLE] for filter {f_key}, expected instance of \
-        {Constants.col_to_data_type[f_key]}, got {type(filters[f_key])}"
+    """a dictionary to store the comparison types of the various columns in
+    the returned results x is from the data while y is the filter value
+    passed to filter_centers"""
+    col_to_comparison = {}
+    # define the individual lambda functions for filters
+    if 'min_age_limit' in filters:
+        # convert to list
+        if isinstance(filters.get('min_age_limit'), int):
+            filters['min_age_limit'] = [filters.get('min_age_limit')]
+        min_age_limit_filter = set(filters['min_age_limit'])
+        col_to_comparison['min_age_limit'] = lambda x: x in min_age_limit_filter
 
+    if 'available_capacity' in filters:
+        col_to_comparison['available_capacity'] = lambda x: \
+                                        x >= filters.get('available_capacity')
+
+    if 'vaccine' in filters:
+        # convert to list
+        if isinstance(filters.get('vaccine'), str):
+            filters['vaccine'] = [filters.get('vaccine')]
+        vaccine_filter = set(map(str.upper, filters.get('vaccine')))
+        col_to_comparison['vaccine'] = lambda x: x.upper() in vaccine_filter
+
+    if 'fee_type' in filters:
+        # convert to list
+        if isinstance(filters.get('fee_type'), str):
+            filters['fee_type'] = [filters.get('fee_type')]
+        fee_filter = set(map(str.upper, filters.get('fee_type')))
+        col_to_comparison['fee_type'] = lambda x: x.upper() in fee_filter
+
+    # level 1 filter
+    level_1_filter = lambda x: all([col_to_comparison.get(k)(x.get(k)) \
+                               for k in filters if col_to_loop_level[k] == 1])
+    # level 2 filter
+    level_2_filter = lambda x: all([col_to_comparison.get(k)(x.get(k)) \
+                               for k in filters if col_to_loop_level[k] == 2])
+
+    # start the main filter processing
     original_centers = centers.get('centers')
-    # this stores the results to be returned
-    filtered_centers = {'centers': []}
-    # level 1 loop
-    for center in original_centers:
-        filtered_sessions = []
 
-        # iterate over the columns for any level 1 filter, if the filter
-        # is passed, only then continue with the below
-        keep_this_center = True
-        for f_key in filters:
-            if Constants.col_to_loop_level[f_key] == 1:
-                # make the check case insensitive: now done inside constants
-                if not Constants.col_to_comparison[f_key](center.get(f_key),
-                                                          filters[f_key]):
-                    # go to the next center
-                    keep_this_center = False
-                    break
+    # apply level 1 filters
+    filtered_centers = list(filter(level_1_filter, original_centers))
 
-        # go to the next center
-        if not keep_this_center:
-            continue
+    if not filtered_centers:
+        # return an empty list
+        return {'centers': []}
 
-        # level 2 loop
-        for session in center.get('sessions'):
-            keep_this_session = True
+    # apply level 2 filters
+    print(filtered_centers)
+    for center in filtered_centers:
+        center['sessions'] = list(filter(level_2_filter, center.get('sessions')))
 
-            # iterate over the columns and check for filters
-            for f_key in filters:
-                if Constants.col_to_loop_level[f_key] == 2:
-                    # make the check case insensitive: now done inside constants
-                    if not Constants.col_to_comparison[f_key](session.get(f_key),
-                                                              filters[f_key]):
-                        keep_this_session = False
-                        break
+    # one more check is to remove those centers that do not have any
+    filtered_centers = list(filter(lambda x: len(x.get('sessions')) > 0,
+                                filtered_centers))
 
-            # go to the next session
-            if not keep_this_session:
-                continue
+    if not filtered_centers:
+        return {'centers': []}
 
-            # if we have reached this point, the session can be appended
-            filtered_sessions.append(session)
-
-        # checked if anything got filtered
-        if len(filtered_sessions) > 0:
-            center['sessions'] = filtered_sessions
-            filtered_centers['centers'].append(center)
-
-    return filtered_centers
+    return {'centers': filtered_centers}
