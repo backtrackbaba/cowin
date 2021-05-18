@@ -41,30 +41,29 @@ class CoWinAPI(BaseApi):
                 if show_available:
                     centers = curr_result.get('centers', [{}])
                     for center in centers:
-                        available = False
                         sessions = center.get('sessions', [])
-                        for session in sessions:
-                            if session.get('available_capacity', 0) > 0:
-                                available = True
-                                break
+                        available = any(
+                            session.get('available_capacity', 0) > 0
+                            for session in sessions
+                        )
                         if available:
                             results.append(center)
                 else:
-                    results.append(curr_result['centers'])
+                    results.extend(curr_result['centers'])
 
         # return the results in the same format as returned by the api
         return {'centers': results}
 
     def get_availability_by_district(self, district_id: Union[str, List[str]],
                                      date: str = today(),
-                                     min_age_limt: int = None, show_available: bool=False):
+                                     min_age_limt: int = None, show_available: bool = False):
         return self.get_availability_by_base(caller='district', areas=district_id,
                                              date=date, min_age_limt=min_age_limt,
                                              show_available=show_available)
 
     def get_availability_by_pincode(self, pin_code: Union[str, List[str]],
                                     date: str = today(),
-                                    min_age_limt: int = None, show_available: bool=False):
+                                    min_age_limt: int = None, show_available: bool = False):
         return self.get_availability_by_base(caller='pincode', areas=pin_code,
                                              date=date, min_age_limt=min_age_limt,
                                              show_available=show_available)
