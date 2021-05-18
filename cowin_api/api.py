@@ -17,7 +17,7 @@ class CoWinAPI(BaseApi):
 
     def get_availability_by_base(self, caller: str,
                                  areas: Union[str, List[str]],
-                                 date: str, min_age_limt: int):
+                                 date: str, min_age_limt: int, show_available: bool):
         """this function is called by the get availability function
         this is separated out so that the parent functions have the same
         structure and development becomes easier"""
@@ -38,19 +38,32 @@ class CoWinAPI(BaseApi):
                 curr_result = self._call_api(url)
             # append
             if curr_result:
-                results += curr_result['centers']
+                if show_available:
+                    centers = curr_result.get('centers', [{}])
+                    for center in centers:
+                        sessions = center.get('sessions', [])
+                        available = any(
+                            session.get('available_capacity', 0) > 0
+                            for session in sessions
+                        )
+                        if available:
+                            results.append(center)
+                else:
+                    results.extend(curr_result['centers'])
 
         # return the results in the same format as returned by the api
         return {'centers': results}
 
     def get_availability_by_district(self, district_id: Union[str, List[str]],
                                      date: str = today(),
-                                     min_age_limt: int = None):
+                                     min_age_limt: int = None, show_available: bool = False):
         return self.get_availability_by_base(caller='district', areas=district_id,
-                                             date=date, min_age_limt=min_age_limt)
+                                             date=date, min_age_limt=min_age_limt,
+                                             show_available=show_available)
 
     def get_availability_by_pincode(self, pin_code: Union[str, List[str]],
                                     date: str = today(),
-                                    min_age_limt: int = None):
+                                    min_age_limt: int = None, show_available: bool = False):
         return self.get_availability_by_base(caller='pincode', areas=pin_code,
-                                             date=date, min_age_limt=min_age_limt)
+                                             date=date, min_age_limt=min_age_limt,
+                                             show_available=show_available)
