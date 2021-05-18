@@ -25,7 +25,7 @@ class CoWinAPI(BaseApi):
         if caller == 'district':
             area_type, base_url = 'district_id', Constants.availability_by_district_url
         # if the areas is a str, convert to list
-        if isinstance(areas, str):
+        if isinstance(areas, str) or isinstance(areas, int):
             areas = [areas]
         # make a separate call for each of the areas
         results = []
