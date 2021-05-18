@@ -10,12 +10,14 @@ def today() -> str:
 def filter_centers_by_age_limit(centers: dict, min_age_limit: int):
     original_centers = centers.get('centers')
     filtered_centers = {'centers': []}
-    for index, center in enumerate(original_centers):
-        filtered_sessions = []
-        for session in center.get('sessions'):
-            if session.get('min_age_limit') == min_age_limit:
-                filtered_sessions.append(session)
-        if len(filtered_sessions) > 0:
+    for center in original_centers:
+        filtered_sessions = [
+            session
+            for session in center.get('sessions')
+            if session.get('min_age_limit') == min_age_limit
+        ]
+
+        if filtered_sessions:
             center['sessions'] = filtered_sessions
             filtered_centers['centers'].append(center)
 
