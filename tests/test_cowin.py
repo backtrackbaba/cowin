@@ -1,4 +1,5 @@
 from cowin_api import CoWinAPI
+from cowin_api.constants import Vaccine, Dose
 
 
 def test_get_states():
@@ -35,7 +36,23 @@ def test_get_availability_by_pincode():
 
 def test_min_age_limit_filter():
     cowin = CoWinAPI()
-    availability = cowin.get_availability_by_district("395", date="03-05-2021", min_age_limt=18)
+    availability = cowin.get_availability_by_district("395", date="03-05-2021", min_age_limit=18)
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+
+
+def test_vaccine_filter():
+    cowin = CoWinAPI()
+    availability = cowin.get_availability_by_district("395", date="03-05-2021", vaccine=Vaccine.COVAXIN)
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+
+
+def test_dose_filter():
+    cowin = CoWinAPI()
+    availability = cowin.get_availability_by_district("395", date="03-05-2021", dose=Dose.FIRST)
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
