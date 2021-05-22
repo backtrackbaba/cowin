@@ -21,3 +21,8 @@ class Vaccine(enum.Enum):
 class Dose(enum.Enum):
     FIRST = 'available_capacity_dose1'
     SECOND = 'available_capacity_dose2'
+
+
+class Fees(enum.Enum):
+    FREE = 'Free'
+    PAID = 'Paid'

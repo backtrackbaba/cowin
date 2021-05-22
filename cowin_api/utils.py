@@ -1,16 +1,22 @@
 from datetime import datetime
+from typing import Optional
 
-from cowin_api.constants import Constants, Vaccine, Dose
+from cowin_api.constants import Constants, Vaccine, Dose, Fees
 
 
 def today() -> str:
     return datetime.now().strftime(Constants.DD_MM_YYYY)
 
 
-def filter_centers(centers: dict, min_age_limit: int = None, vaccine: Vaccine = None, dose: Dose = None):
+def filter_centers(centers: dict, min_age_limit: Optional[int] = None, vaccine: Optional[Vaccine] = None,
+                   dose: Optional[Dose] = None, fees: Optional[Fees] = None):
     original_centers = centers.get('centers')
     filtered_centers = {'centers': []}
+
     for index, center in enumerate(original_centers):
+        if fees and not center.get('fee_type') == fees.value:
+            continue
+
         filtered_sessions = []
         for session in center.get('sessions'):
 
@@ -23,7 +29,7 @@ def filter_centers(centers: dict, min_age_limit: int = None, vaccine: Vaccine = 
 
             filtered_sessions.append(session)
 
-        if len(filtered_sessions) > 0:
+        if filtered_sessions:
             center['sessions'] = filtered_sessions
             filtered_centers['centers'].append(center)
 

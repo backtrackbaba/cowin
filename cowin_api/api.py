@@ -1,7 +1,7 @@
 from typing import Union, List, Optional
 
 from cowin_api.base_api import BaseApi
-from cowin_api.constants import Constants, Dose, Vaccine
+from cowin_api.constants import Constants, Dose, Vaccine, Fees
 from cowin_api.utils import today, filter_centers
 
 
@@ -19,7 +19,8 @@ class CoWinAPI(BaseApi):
                                  areas: Union[str, List[str]],
                                  date: str, min_age_limit: int,
                                  vaccine: Optional[Vaccine] = None,
-                                 dose: Optional[Dose] = None):
+                                 dose: Optional[Dose] = None,
+                                 fees: Optional[Fees] = None):
         """this function is called by the get availability function
         this is separated out so that the parent functions have the same
         structure and development becomes easier"""
@@ -40,7 +41,8 @@ class CoWinAPI(BaseApi):
                 centers=curr_result,
                 min_age_limit=min_age_limit,
                 vaccine=vaccine,
-                dose=dose
+                dose=dose,
+                fees=fees
             )
 
             # append
@@ -54,16 +56,18 @@ class CoWinAPI(BaseApi):
                                      date: str = today(),
                                      min_age_limit: int = None,
                                      vaccine: Optional[Vaccine] = None,
-                                     dose: Optional[Dose] = None):
+                                     dose: Optional[Dose] = None,
+                                     fees: Optional[Fees] = None):
         return self.get_availability_by_base(caller='district', areas=district_id,
                                              date=date, min_age_limit=min_age_limit,
-                                             vaccine=vaccine, dose=dose)
+                                             vaccine=vaccine, dose=dose, fees=fees)
 
     def get_availability_by_pincode(self, pin_code: Union[str, List[str]],
                                     date: str = today(),
                                     min_age_limit: int = None,
                                     vaccine: Optional[Vaccine] = None,
-                                    dose: Optional[Dose] = None):
+                                    dose: Optional[Dose] = None,
+                                    fees: Optional[Fees] = None):
         return self.get_availability_by_base(caller='pincode', areas=pin_code,
                                              date=date, min_age_limit=min_age_limit,
-                                             vaccine=vaccine, dose=dose)
+                                             vaccine=vaccine, dose=dose, fees=fees)

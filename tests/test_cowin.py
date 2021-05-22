@@ -1,5 +1,5 @@
 from cowin_api import CoWinAPI
-from cowin_api.constants import Vaccine, Dose
+from cowin_api.constants import Vaccine, Dose, Fees
 
 
 def test_get_states():
@@ -53,6 +53,14 @@ def test_vaccine_filter():
 def test_dose_filter():
     cowin = CoWinAPI()
     availability = cowin.get_availability_by_district("395", date="03-05-2021", dose=Dose.FIRST)
+
+    assert isinstance(availability, dict)
+    assert isinstance(availability.get('centers'), list)
+
+
+def test_fees_filter():
+    cowin = CoWinAPI()
+    availability = cowin.get_availability_by_district("395", date="03-05-2021", fees=Fees.PAID)
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
