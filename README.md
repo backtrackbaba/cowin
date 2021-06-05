@@ -111,6 +111,43 @@ print(districts)
 
 ---
 
+## Available Filters
+
+A bunch of filters are available which can be passed while calling the `get_availability_by_district`
+and `get_availability_by_pincode` methods. These filters are optional and when it is not passed, default filters are
+used which gives the actual data.
+
+### Default Filters:
+
+```python
+default_filters = {
+    'min_age_limit': 18,
+    'fee_type': ['Free', 'Paid'],
+    'vaccine': ['COVISHIELD', 'COVAXIN', 'Sputnik V'],
+    'available_capacity': 0,
+    'available_capacity_dose1': 0,
+    'available_capacity_dose2': 0
+}
+```
+
+### User Defined Filters:
+
+Out of the filters mentioned above, you can pass the needed filters to get the filtered results
+
+**Example:**
+To get all the centers having `COVAXIN` OR `COVISHIELD`, with minimum age limit as `45` and available free of cost, you
+would need to set the following filters
+
+```python
+filters = {
+    "min_age_limit": 45,
+    "vaccine": ['COVISHIELD', 'COVAXIN'],
+    'fee_type': ['Free']
+}
+```
+
+---
+
 ## Get all the centers available in a district
 
 Use this method to lookup for centers based on a `district_id` or a list of `district_ids`. This method is broader than
@@ -124,10 +161,10 @@ from cowin_api import CoWinAPI
 
 district_id = '395'
 date = '03-05-2021'  # Optional. Takes today's date by default
-min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
-
+min_age_limit = 18  # Optional. By default returns centers with default filters
+filters = {"min_age_limit": 18}
 cowin = CoWinAPI()
-available_centers = cowin.get_availability_by_district(district_id, date, min_age_limit)
+available_centers = cowin.get_availability_by_district(district_id, date, filters)
 print(available_centers)
 ```
 
@@ -155,7 +192,7 @@ print(available_centers)
           "date": "02-05-2021",
           "available_capacity": 0,
           "min_age_limit": 18,
-          "vaccine": "",
+          "vaccine": "COVAXIN",
           "slots": [
             "09:00AM-11:00AM",
             "11:00AM-01:00PM",
@@ -168,7 +205,7 @@ print(available_centers)
           "date": "03-05-2021",
           "available_capacity": 0,
           "min_age_limit": 18,
-          "vaccine": "",
+          "vaccine": "COVISHIELD",
           "slots": [
             "09:00AM-11:00AM",
             "11:00AM-01:00PM",
@@ -197,10 +234,10 @@ from cowin_api import CoWinAPI
 
 pin_code = "400080"
 date = '03-05-2021'  # Optional. Default value is today's date
-min_age_limit = 18  # Optional. By default returns centers without filtering by min_age_limit
+filters = {"min_age_limit": 18}  # Optional. By default returns centers with default filters
 
 cowin = CoWinAPI()
-available_centers = cowin.get_availability_by_pincode(pin_code, date, min_age_limit)
+available_centers = cowin.get_availability_by_pincode(pin_code, date, filters)
 print(available_centers)
 ```
 
