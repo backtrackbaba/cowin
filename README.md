@@ -352,6 +352,13 @@ print(available_centers)
 
 ---
 
+# Exceptions:
+
+The library internally uses [`requests`](https://docs.python-requests.org/en/master/) internally and any exceptions
+thrown by requests are propagated ahead.
+
+---
+
 # Notes:
 
 The API's of CoWin may at times return a 401 Unauthorized response. To mitigate this we are passing user agents in the
