@@ -374,7 +374,7 @@ fixed interval
 - [x] Add a filter to search by age group of 18-45 and 45+
 - [x] Allow user to search for multiple pin codes
 - [x] Allow user to search for multiple districts
-- [ ] Catch and raise custom exceptions
+- [ ] ~~Catch and raise custom exceptions~~
 - [ ] Implement Rate Limiting
 - [ ] Implement mocking in test cases
 
