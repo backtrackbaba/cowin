@@ -13,8 +13,10 @@ def filter_centers(data: dict, filters: dict):
     for center in centers:
         filtered_sessions = []
         for session in center.get('sessions'):
-            if session.get('min_age_limit') == filters.get('min_age_limit') and session.get('vaccine') in filters.get(
-                    'vaccine') and session.get('available_capacity') >= filters.get('available_capacity'):
+            if session.get('min_age_limit') >= filters.get('min_age_limit') and session.get('vaccine') in \
+                    filters.get('vaccine') and session.get('available_capacity') >= filters.get('available_capacity') \
+                    and session.get('available_capacity_dose1') >= filters.get('available_capacity_dose1') and \
+                    session.get('available_capacity_dose2') >= filters.get('available_capacity_dose2'):
                 filtered_sessions.append(session)
         if len(filtered_sessions) > 0:
             center['sessions'] = filtered_sessions

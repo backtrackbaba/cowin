@@ -12,6 +12,8 @@ class Constants:
     default_filters = {
         'min_age_limit': 18,
         'fee_type': ['Free', 'Paid'],
-        'vaccine': ['COVISHIELD', 'COVAXIN'],
+        'vaccine': ['COVISHIELD', 'COVAXIN', 'Sputnik V'],
         'available_capacity': 0,
+        'available_capacity_dose1': 0,
+        'available_capacity_dose2': 0
     }
