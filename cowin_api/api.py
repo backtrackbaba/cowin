@@ -16,9 +16,9 @@ class CoWinAPI(BaseApi):
         url = f"{Constants.districts_list_url}/{state_id}"
         return self._call_api(url)
 
-    def get_availability_by_base(self, caller: str,
-                                 areas: Union[str, List[str]],
-                                 date: str, filters: dict):
+    def __get_availability_by_base(self, caller: str,
+                                   areas: Union[str, List[str]],
+                                   date: str, filters: dict):
         """this function is called by the get availability function
         this is separated out so that the parent functions have the same
         structure and development becomes easier"""
@@ -45,15 +45,18 @@ class CoWinAPI(BaseApi):
     def get_availability_by_district(self, district_id: Union[str, List[str]],
                                      date: str = today(),
                                      filters: dict = None):
-        if filters is None:
+        if not filters:
             filters = {}
-        return self.get_availability_by_base(caller='district', areas=district_id,
-                                             date=date, filters=filters)
+        return self.__get_availability_by_base(caller='district', areas=district_id,
+                                               date=date, filters=filters)
 
     def get_availability_by_pincode(self, pin_code: Union[str, List[str]],
                                     date: str = today(),
                                     filters: dict = None):
-        if filters is None:
+        if not filters:
             filters = {}
-        return self.get_availability_by_base(caller='pincode', areas=pin_code,
-                                             date=date, filters=filters)
+        return self.__get_availability_by_base(caller='pincode', areas=pin_code,
+                                               date=date, filters=filters)
+
+    def get_centers_by_lat_long(self, lat, long):
+        return self._call_api(f"{Constants.centers_by_lat_long}?lat={lat}&long={long}")

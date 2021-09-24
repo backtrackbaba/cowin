@@ -34,6 +34,7 @@ def init_data():
     districts_data = get_test_data('districts_responses.json')
     availability_by_district_data = get_test_data('availability_by_district_responses.json')
     availability_by_pincode_data = get_test_data('availability_by_pincode_responses.json')
+    centers_by_lat_long = get_test_data('centers_by_lat_long_responses.json')
 
     responses.add(
         responses.Response(
@@ -67,6 +68,15 @@ def init_data():
             method='GET',
             url=f"{Constants.availability_by_pin_code_url}?pincode=400080&date={today()}",
             json=availability_by_pincode_data,
+            status=200
+        )
+    )
+
+    responses.add(
+        responses.Response(
+            method='GET',
+            url=f"{Constants.centers_by_lat_long}?lat=18.93&long=72.82",
+            json=centers_by_lat_long,
             status=200
         )
     )
@@ -109,9 +119,11 @@ def test_get_availability_by_pincode(init_data):
 
 
 @responses.activate
-def test_min_age_limit_filter(init_data):
+def test_get_centers_by_lat_long(init_data):
     cowin = CoWinAPI()
-    availability = cowin.get_availability_by_district("395")
+    lat = 18.93
+    long = 72.82
+    availability = cowin.get_centers_by_lat_long(lat, long)
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)

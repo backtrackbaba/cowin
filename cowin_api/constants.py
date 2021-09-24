@@ -10,6 +10,8 @@ class Constants:
     availability_by_pin_code_url = f"{base_url}/appointment/sessions/public/calendarByPin"
     availability_by_district_url = f"{base_url}/appointment/sessions/public/calendarByDistrict"
 
+    centers_by_lat_long = f"{base_url}/appointment/centers/public/findByLatLong"
+
     DD_MM_YYYY = "%d-%m-%Y"
 
     default_filters = {
