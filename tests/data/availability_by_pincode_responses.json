@@ -1,0 +1,267 @@
+{
+  "centers": [
+    {
+      "center_id": 724109,
+      "name": "Hira Mongi Navneet Hospital",
+      "address": "Valji Ladha Rd Near Kalidas Natya Gruh Mulund West Mumbai",
+      "state_name": "Maharashtra",
+      "district_name": "Mumbai",
+      "block_name": "Ward T Corporation - MH",
+      "pincode": 400080,
+      "lat": 19,
+      "long": 72,
+      "from": "09:30:00",
+      "to": "16:00:00",
+      "fee_type": "Paid",
+      "sessions": [
+        {
+          "session_id": "53483c08-6e78-4fd8-a0a9-99c5b9438842",
+          "date": "24-09-2021",
+          "available_capacity": 71,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "09:30AM-10:30AM",
+            "10:30AM-11:30AM",
+            "11:30AM-12:30PM",
+            "12:30PM-04:00PM"
+          ],
+          "available_capacity_dose1": 8,
+          "available_capacity_dose2": 63
+        },
+        {
+          "session_id": "d5a3cae1-b8dd-4d59-9973-3d1a6da08e2f",
+          "date": "25-09-2021",
+          "available_capacity": 71,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "09:30AM-10:30AM",
+            "10:30AM-11:30AM",
+            "11:30AM-12:30PM",
+            "12:30PM-04:00PM"
+          ],
+          "available_capacity_dose1": 30,
+          "available_capacity_dose2": 41
+        }
+      ],
+      "vaccine_fees": [
+        {
+          "vaccine": "COVISHIELD",
+          "fee": "780"
+        }
+      ]
+    },
+    {
+      "center_id": 729363,
+      "name": "Apex Hospitals Mulund",
+      "address": "Veena Nagar Phase 2 Tulsi Pipeline Rd Mulund West",
+      "state_name": "Maharashtra",
+      "district_name": "Mumbai",
+      "block_name": "Ward T Corporation - MH",
+      "pincode": 400080,
+      "lat": 19,
+      "long": 72,
+      "from": "08:30:00",
+      "to": "21:00:00",
+      "fee_type": "Paid",
+      "sessions": [
+        {
+          "session_id": "037d8a3d-d885-4344-aeed-43321daba924",
+          "date": "24-09-2021",
+          "available_capacity": 216,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVAXIN",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 124,
+          "available_capacity_dose2": 92
+        },
+        {
+          "session_id": "2ca835a1-887b-40a4-a433-f30dbece0604",
+          "date": "24-09-2021",
+          "available_capacity": 558,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 361,
+          "available_capacity_dose2": 197
+        },
+        {
+          "session_id": "9b939b46-1be9-448b-a6a4-4c03471c57bb",
+          "date": "25-09-2021",
+          "available_capacity": 559,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 375,
+          "available_capacity_dose2": 184
+        },
+        {
+          "session_id": "bdd9b6e9-4b16-4ea2-a297-ce6d06ec9045",
+          "date": "25-09-2021",
+          "available_capacity": 248,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVAXIN",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 139,
+          "available_capacity_dose2": 109
+        },
+        {
+          "session_id": "ced53006-417a-42ee-b892-9c07dba4695b",
+          "date": "26-09-2021",
+          "available_capacity": 713,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 388,
+          "available_capacity_dose2": 325
+        },
+        {
+          "session_id": "e82bf167-3ddf-4817-9ca0-6ccdee480ef7",
+          "date": "26-09-2021",
+          "available_capacity": 285,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVAXIN",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 141,
+          "available_capacity_dose2": 144
+        },
+        {
+          "session_id": "2690db2f-1e1c-4656-8d76-f6dee7a166ce",
+          "date": "27-09-2021",
+          "available_capacity": 775,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 396,
+          "available_capacity_dose2": 379
+        },
+        {
+          "session_id": "974a6482-da46-411c-93a9-c32c239410e6",
+          "date": "27-09-2021",
+          "available_capacity": 294,
+          "min_age_limit": 18,
+          "allow_all_age": true,
+          "vaccine": "COVAXIN",
+          "slots": [
+            "08:30AM-11:30AM",
+            "11:30AM-02:30PM",
+            "02:30PM-05:30PM",
+            "05:30PM-09:00PM"
+          ],
+          "available_capacity_dose1": 149,
+          "available_capacity_dose2": 145
+        }
+      ],
+      "vaccine_fees": [
+        {
+          "vaccine": "COVAXIN",
+          "fee": "1200"
+        },
+        {
+          "vaccine": "COVISHIELD",
+          "fee": "780"
+        }
+      ]
+    },
+    {
+      "center_id": 712762,
+      "name": "Shraddha Polyclinic And Nur.H",
+      "address": "Smruti Mandir Opp. Mirani Nagar 1st And 2nd Floor Ganesh Gawade Road Mulund West",
+      "state_name": "Maharashtra",
+      "district_name": "Mumbai",
+      "block_name": "Ward T Corporation - MH",
+      "pincode": 400080,
+      "lat": 19,
+      "long": 72,
+      "from": "12:00:00",
+      "to": "16:00:00",
+      "fee_type": "Paid",
+      "sessions": [
+        {
+          "session_id": "078487d5-aa10-402c-b331-8e25bc0b5f82",
+          "date": "24-09-2021",
+          "available_capacity": 33,
+          "min_age_limit": 45,
+          "allow_all_age": false,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "12:00PM-01:00PM",
+            "01:00PM-02:00PM",
+            "02:00PM-03:00PM",
+            "03:00PM-04:00PM"
+          ],
+          "available_capacity_dose1": 20,
+          "available_capacity_dose2": 13
+        },
+        {
+          "session_id": "e5a41b65-61d9-493f-8dcd-69f611591257",
+          "date": "24-09-2021",
+          "available_capacity": 30,
+          "min_age_limit": 18,
+          "max_age_limit": 44,
+          "allow_all_age": false,
+          "vaccine": "COVISHIELD",
+          "slots": [
+            "12:00PM-01:00PM",
+            "01:00PM-02:00PM",
+            "02:00PM-03:00PM",
+            "03:00PM-04:00PM"
+          ],
+          "available_capacity_dose1": 20,
+          "available_capacity_dose2": 10
+        }
+      ],
+      "vaccine_fees": [
+        {
+          "vaccine": "COVISHIELD",
+          "fee": "780"
+        }
+      ]
+    }
+  ]
+}

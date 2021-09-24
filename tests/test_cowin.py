@@ -2,15 +2,17 @@ import copy
 import json
 import os
 
+import pytest
+import responses
+
 from cowin_api import CoWinAPI
 from cowin_api.constants import Constants
-from cowin_api.utils import filter_centers
+from cowin_api.utils import today, filter_centers
 
 
-def get_sample_response() -> dict:
-    with open(os.path.join('tests', 'data', 'response.json'), 'r') as f:
-        data = json.load(f)
-    return data
+def get_test_data(file_name):
+    with open(os.path.join(Constants.tests_data_dir, file_name), 'r') as f:
+        return json.load(f)
 
 
 def get_final_filters(user_filters: dict):
@@ -26,7 +28,52 @@ def get_sessions_count(centers: dict) -> int:
     return sessions
 
 
-def test_get_states():
+@pytest.fixture
+def init_data():
+    states_data = get_test_data('states_responses.json')
+    districts_data = get_test_data('districts_responses.json')
+    availability_by_district_data = get_test_data('availability_by_district_responses.json')
+    availability_by_pincode_data = get_test_data('availability_by_pincode_responses.json')
+
+    responses.add(
+        responses.Response(
+            method='GET',
+            url=f"{Constants.districts_list_url}/21",
+            json=districts_data,
+            status=200
+        )
+    )
+
+    responses.add(
+        responses.Response(
+            method='GET',
+            url=f"{Constants.availability_by_district_url}?district_id=395&date={today()}",
+            json=availability_by_district_data,
+            status=200
+        )
+    )
+
+    responses.add(
+        responses.Response(
+            method='GET',
+            url=Constants.states_list_url,
+            json=states_data,
+            status=200
+        )
+    )
+
+    responses.add(
+        responses.Response(
+            method='GET',
+            url=f"{Constants.availability_by_pin_code_url}?pincode=400080&date={today()}",
+            json=availability_by_pincode_data,
+            status=200
+        )
+    )
+
+
+@responses.activate
+def test_get_states(init_data):
     cowin = CoWinAPI()
     states = cowin.get_states()
 
@@ -34,7 +81,8 @@ def test_get_states():
     assert states.get('states')[0].get('state_id') == 1
 
 
-def test_get_districts():
+@responses.activate
+def test_get_districts(init_data):
     cowin = CoWinAPI()
     districts = cowin.get_districts("21")
 
@@ -42,7 +90,8 @@ def test_get_districts():
     assert districts.get('districts')[0].get('district_id') == 391
 
 
-def test_get_availability_by_district():
+@responses.activate
+def test_get_availability_by_district(init_data):
     cowin = CoWinAPI()
     availability = cowin.get_availability_by_district("395")
 
@@ -50,7 +99,8 @@ def test_get_availability_by_district():
     assert isinstance(availability.get('centers'), list)
 
 
-def test_get_availability_by_pincode():
+@responses.activate
+def test_get_availability_by_pincode(init_data):
     cowin = CoWinAPI()
     availability = cowin.get_availability_by_pincode("400080")
 
@@ -58,9 +108,10 @@ def test_get_availability_by_pincode():
     assert isinstance(availability.get('centers'), list)
 
 
-def test_min_age_limit_filter():
+@responses.activate
+def test_min_age_limit_filter(init_data):
     cowin = CoWinAPI()
-    availability = cowin.get_availability_by_district("395", date="03-05-2021")
+    availability = cowin.get_availability_by_district("395")
 
     assert isinstance(availability, dict)
     assert isinstance(availability.get('centers'), list)
@@ -68,7 +119,7 @@ def test_min_age_limit_filter():
 
 def test_age_limit_filter():
     filters = {'min_age_limit': 45}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 3
     assert get_sessions_count(availability) == 5
@@ -76,13 +127,13 @@ def test_age_limit_filter():
 
 def test_fee_type_filter():
     filters = {'fee_type': "Free"}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 2
     assert get_sessions_count(availability) == 7
 
     filters = {'fee_type': "Paid"}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 2
     assert get_sessions_count(availability) == 5
@@ -90,19 +141,19 @@ def test_fee_type_filter():
 
 def test_availability_filter():
     filters = {'available_capacity': 20}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 2
     assert get_sessions_count(availability) == 6
 
     filters = {'available_capacity_dose1': 10}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 2
     assert get_sessions_count(availability) == 5
 
     filters = {'available_capacity_dose2': 10}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 2
     assert get_sessions_count(availability) == 7
@@ -110,44 +161,44 @@ def test_availability_filter():
 
 def test_vaccine_filter():
     filters = {'vaccine': ['COVAXIN']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 3
     assert get_sessions_count(availability) == 3
 
     filters = {'vaccine': ['COVISHIELD']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 3
     assert get_sessions_count(availability) == 5
 
     filters = {'vaccine': ['Sputnik V']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 3
     assert get_sessions_count(availability) == 4
 
     filters = {'vaccine': ['Sputnik V', 'COVISHIELD']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 4
     assert get_sessions_count(availability) == 9
 
     filters = {'vaccine': ['COVAXIN', 'COVISHIELD']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 4
     assert get_sessions_count(availability) == 8
 
     filters = {'vaccine': ['Sputnik V', 'COVAXIN']}
-    availability = filter_centers(get_sample_response(), get_final_filters(filters))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters(filters))
 
     assert len(availability.get('centers')) == 3
     assert get_sessions_count(availability) == 7
 
 
 def test_no_filter():
-    availability = filter_centers(get_sample_response(), get_final_filters({}))
+    availability = filter_centers(get_test_data('availability_by_district_responses.json'), get_final_filters({}))
 
     assert len(availability.get('centers')) == 4
     assert get_sessions_count(availability) == 12

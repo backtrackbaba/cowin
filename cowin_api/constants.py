@@ -1,3 +1,6 @@
+import os
+
+
 class Constants:
     base_url = "https://cdn-api.co-vin.in/api/v2"
 
@@ -17,3 +20,5 @@ class Constants:
         'available_capacity_dose1': 0,
         'available_capacity_dose2': 0
     }
+
+    tests_data_dir = os.path.join('tests', 'data')
