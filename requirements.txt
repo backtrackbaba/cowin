@@ -1,4 +1,4 @@
 fake-useragent==0.1.11
-pytest==6.2.3
-requests==2.25.1
+pytest==6.2.5
+requests==2.26.0
 responses==0.14.0
